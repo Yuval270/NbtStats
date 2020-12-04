@@ -1,0 +1,30 @@
+# armor:
+default_health: 15 # no armor player = 10 hp || 20 hp chesplate player = 30 hp
+default_constitution: 10
+
+# weapon:
+default_min_damage: 1
+default_max_damage: 10
+
+default_crit_change: 1.2
+default_crit_damage: 15
+default_crit_factor: 15
+
+default_life_steal: 15
+default_life_steal_chance: 15
+
+# all:
+default_defense: 10
+default_resistance: 10
+
+default_health_regen: 7
+default_vitality: 2
+
+default_block: 10
+default_dodge: 5
+dodge_cooldown: 5
+
+
+
+
+

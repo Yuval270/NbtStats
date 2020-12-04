@@ -1,0 +1,4 @@
+name: NbtStats
+version: ${project.version}
+main: me.yuval270.nbtstats.NbtStats
+api-version: 1.16
