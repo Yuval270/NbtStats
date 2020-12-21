@@ -4,18 +4,24 @@ import de.tr7zw.changeme.nbtapi.NBTItem;
 import lombok.Getter;
 import me.yuval270.nbtstats.NbtStats;
 import me.yuval270.nbtstats.stats.types.Target;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.UUID;
 
 public class Stat {
     private final double defaultValue;
     private final String nbtTag;
     private final Target target;
     @Getter
-    private boolean coolDown = false;
+    private boolean cooldown = false;
     @Getter
     private double value;
 
@@ -27,48 +33,46 @@ public class Stat {
         value = defaultValue;
         updateStats(player);
     }
-    public void startCooldown(int time){
-        coolDown = true;
+    public void startCooldown(int time) {
+        cooldown = true;
         new BukkitRunnable() {
             @Override
             public void run() {
-                coolDown = false;
+                cooldown = false;
             }
         }.runTaskLater(NbtStats.getProvidingPlugin(NbtStats.class), time);
     }
 
     public void updateStats(final Player player) {
         value = defaultValue;
-        if (target == Target.ARMOR) {
+        if (target == Target.ARMOR)
             for (ItemStack item : player.getInventory().getArmorContents())
-                if (item != null) {
-                    NBTItem nbtItem = new NBTItem(item);
-                    if (nbtItem.hasKey(nbtTag))
-                        value += nbtItem.getDouble(nbtTag);
-                }
-        }
-        else if (target == Target.ALL) {
-            for (ItemStack item : player.getInventory().getArmorContents()) {
-                if (item != null) {
-                    NBTItem nbtItem = new NBTItem(item);
-                    if (nbtItem.hasKey(nbtTag))
-                        value += nbtItem.getDouble(nbtTag);
-                }
-            }
-            ItemStack itemInHand = player.getInventory().getItemInMainHand();
-            if (itemInHand != null) {
-                NBTItem nbtItem = new NBTItem(itemInHand);
-                if (nbtItem.hasKey(nbtTag))
-                    value += nbtItem.getDouble(nbtTag);
-            }
+                checkItem(item, false);
 
-        } else if (target == Target.WEAPON) {
-            ItemStack itemInHand = player.getInventory().getItemInMainHand();
-            if (itemInHand != null && itemInHand.getType() == Material.WOODEN_PICKAXE) {
-                NBTItem nbtItem = new NBTItem(itemInHand);
+        else if (target == Target.ALL) {
+            for (ItemStack item : player.getInventory().getArmorContents())
+                checkItem(item, false);
+            checkItem(player.getInventory().getItemInMainHand(), true);
+        }
+         else if (target == Target.WEAPON)
+            checkItem(player.getInventory().getItemInMainHand(), true);
+
+
+    }
+    private void checkItem(ItemStack item, boolean isWeapon){
+        if (item != null){
+            if (isWeapon && item.getType() == Material.WOODEN_PICKAXE){
+                NBTItem nbtItem = new NBTItem(item);
+                if (nbtItem.hasKey(nbtTag))
+                    value += nbtItem.getDouble(nbtTag);
+            }
+            else if (!isWeapon && item.getType() != Material.AIR){
+                NBTItem nbtItem = new NBTItem(item);
                 if (nbtItem.hasKey(nbtTag))
                     value += nbtItem.getDouble(nbtTag);
             }
         }
+
     }
+
 }

@@ -3,6 +3,16 @@ package me.yuval270.nbtstats.stats.types;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import lombok.Getter;
+import me.yuval270.nbtstats.NbtStats;
+import me.yuval270.nbtstats.stats.info.Stat;
+import me.yuval270.nbtstats.stats.info.Stats;
+import org.bukkit.entity.Player;
+
+import java.util.Random;
+
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import lombok.Getter;
 import me.yuval270.nbtstats.stats.info.Stat;
 import me.yuval270.nbtstats.stats.info.Stats;
 import org.bukkit.entity.Player;
@@ -37,24 +47,29 @@ public class WeaponStats {
         lifeStealStat = new Stat(Stats.NBT_LIFE_STEAL, player, Target.WEAPON, Stats.DEFAULT_LIFE_STEAL);
         lifeStealChanceStat = new Stat(Stats.NBT_LIFE_STEAL_CHANCE, player, Target.WEAPON, Stats.DEFAULT_LIFE_STEAL_CHANCE);
     }
-    public double getRandomDamageInRange(){
+
+
+    public double getRandomDamageInRange() {
         return ((Math.random() * (maxDamageStat.getValue() - minDamageStat.getValue())) + minDamageStat.getValue());
     }
-    public double getCritDamage(){
+
+    public double getCritDamage() {
         double critDamage = 0;
-        Random random = new Random();
-        int chance =  random.nextInt(100 - 1) + 1;
+
+        int chance = NbtStats.random.nextInt(100 - 1) + 1;
         if (critChanceStat.getValue() >= chance)
             critDamage = critDamageStat.getValue();
         return critDamage * critFactorStat.getValue();
     }
-    public double getFinalDamage(){
+
+    public double getFinalDamage() {
         return getRandomDamageInRange() + getCritDamage();
     }
-    public double getLifeStealAmount(double finalDamage){
+
+    public double getLifeStealAmount(double finalDamage) {
         double lifeSteal = 0;
-        Random random = new Random();
-        int chance =  random.nextInt(100 - 1) + 1;
+
+        int chance = NbtStats.random.nextInt(100 - 1) + 1;
         if (lifeStealChanceStat.getValue() >= chance)
             lifeSteal = finalDamage * lifeStealStat.getValue();
         return lifeSteal;

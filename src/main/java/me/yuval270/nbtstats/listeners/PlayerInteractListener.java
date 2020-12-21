@@ -20,7 +20,7 @@ public class PlayerInteractListener implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
-        PlayerStats stats = main.getStatsManager().getPlayer(player);
+        PlayerStats stats = main.getStatsManager().getPlayer(player.getUniqueId());
 
         if (item != null && stats != null) {
 

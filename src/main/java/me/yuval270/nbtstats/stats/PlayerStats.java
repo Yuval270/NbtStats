@@ -7,6 +7,7 @@ import me.yuval270.nbtstats.stats.types.ArmorStats;
 import me.yuval270.nbtstats.stats.types.WeaponStats;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 public class PlayerStats {
     private final NbtStats main;
@@ -16,9 +17,11 @@ public class PlayerStats {
     private ArmorStats armorStats;
     @Getter
     private AllStats allStats;
+    @Getter
     private double health;
     @Getter
     private Player player;
+    BukkitTask regen;
 
     public PlayerStats(Player player, final NbtStats main) {
         this.player = player;
@@ -40,6 +43,10 @@ public class PlayerStats {
         health += hp;
         double proportion = getMaxHealth() / 20;
         player.setHealth(Math.ceil(health / proportion));
+    }
+    public void updateHealth(){
+        double proportion = getMaxHealth() / 20;
+        this.health = Math.ceil(player.getHealth() * proportion);
     }
 
     public void removeHealth(double hp) {
@@ -73,9 +80,11 @@ public class PlayerStats {
         allStats = new AllStats(player);
         health = getMaxHealth();
     }
-
+    public void cancel(){
+        regen.cancel();
+    }
     private void regen() {
-        new BukkitRunnable() {
+         regen = new BukkitRunnable() {
             @Override
             public void run() {
                 double maxHealth = getMaxHealth();
@@ -84,7 +93,9 @@ public class PlayerStats {
                     health = maxHealth;
                 else
                     health += amountToRegen;
-                int proportion = (int) getMaxHealth() / 20;
+                int proportion = (int) Math.ceil(getMaxHealth() / 20);
+                System.out.println(proportion);
+                System.out.println(health);
                 player.setHealth(Math.ceil(health / proportion));
 
             }

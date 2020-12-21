@@ -1,6 +1,6 @@
 # armor:
-default_health: 15 # no armor player = 10 hp || 20 hp chesplate player = 30 hp
-default_constitution: 10
+default_health: 20 # no armor player = 10 hp || 20 hp chesplate player = 30 hp
+default_constitution: 1
 
 # weapon:
 default_min_damage: 1

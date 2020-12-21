@@ -4,6 +4,7 @@ import lombok.Getter;
 import me.yuval270.nbtstats.NbtStats;
 import me.yuval270.nbtstats.stats.info.Stat;
 import me.yuval270.nbtstats.stats.info.Stats;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -36,23 +37,28 @@ public class AllStats {
         speedStat = new Stat(Stats.NBT_SPEED, player, Target.ALL, 0);
         levelStat = new Stat(Stats.NBT_LEVEL, player, Target.ALL, 0);
 
+        updateSpeed(player);
+
     }
 
-    public boolean canDodge(){
-        if (dodgeStat.isCoolDown())
-            return false;
+    public void updateSpeed(Player player) {
+      //  player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speedStat.getValue());
 
-        Random random = new Random();
-        int chance =  random.nextInt(100 - 1) + 1;
-        if (chance <= dodgeStat.getValue()){
+    }
+
+    public boolean canDodge() {
+        if (dodgeStat.isCooldown())
+            return false;
+        int chance = NbtStats.random.nextInt(100 - 1) + 1;
+        if (chance <= dodgeStat.getValue()) {
             dodgeStat.startCooldown(Stats.DODGE_COOLDOWN);
             return true;
         }
         return false;
     }
-    public boolean canBlock(){
-        Random random = new Random();
-        int chance =  random.nextInt(100 - 1) + 1;
+
+    public boolean canBlock() {
+        int chance = NbtStats.random.nextInt(100 - 1) + 1;
         return chance <= blockStat.getValue();
     }
 

@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 
 @RequiredArgsConstructor
 public class InventoryManipulationListener implements Listener {
@@ -15,14 +16,22 @@ public class InventoryManipulationListener implements Listener {
 
     @EventHandler
     public void inventoryClickListener(InventoryClickEvent event){
-        PlayerStats stats = main.getStatsManager().getPlayer((Player) event.getWhoClicked());
+        Player player = (Player) event.getWhoClicked();
+        PlayerStats stats = main.getStatsManager().getPlayer(player.getUniqueId());
         if (stats != null)
             stats.updateStats();
     }
 
     @EventHandler
     public void inventoryDragListener(InventoryDragEvent event){
-        PlayerStats stats = main.getStatsManager().getPlayer((Player) event.getWhoClicked());
+        Player player = (Player) event.getWhoClicked();
+        PlayerStats stats = main.getStatsManager().getPlayer(player.getUniqueId());
+        if (stats != null)
+            stats.updateStats();
+    }
+    @EventHandler
+    public void inventoryDragListener(PlayerItemHeldEvent event){
+        PlayerStats stats = main.getStatsManager().getPlayer(event.getPlayer().getUniqueId());
         if (stats != null)
             stats.updateStats();
     }
