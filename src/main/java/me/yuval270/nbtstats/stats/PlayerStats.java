@@ -39,14 +39,11 @@ public class PlayerStats {
         return armorStats.getHealthStat().getValue() * armorStats.getConstitutionStat().getValue();
     }
 
-    public void addHealth(double hp) {
-        health += hp;
+
+    public void updateHealth(double health){
         double proportion = getMaxHealth() / 20;
-        player.setHealth(Math.ceil(health / proportion));
-    }
-    public void updateHealth(){
-        double proportion = getMaxHealth() / 20;
-        this.health = Math.ceil(player.getHealth() * proportion);
+        this.health = Math.ceil(health * proportion);
+        player.setHealth(health);
     }
 
     public void removeHealth(double hp) {
@@ -54,9 +51,8 @@ public class PlayerStats {
         if (health <= 0)
             player.setHealth(0);
         else {
-            int proportion = (int) getMaxHealth() / 20;
+            double proportion = getMaxHealth() / 20;
             player.setHealth(Math.ceil(health / proportion));
-
         }
     }
     public void updateStats(){
@@ -83,21 +79,32 @@ public class PlayerStats {
     public void cancel(){
         regen.cancel();
     }
+
     private void regen() {
          regen = new BukkitRunnable() {
             @Override
             public void run() {
                 double maxHealth = getMaxHealth();
+                //System.out.println("vitality " + allStats.getVitalityStat().getValue());
+                //System.out.println("max health" + maxHealth);
+                //System.out.println("regen stat " + maxHealth * allStats.getHealthRegenStat().getValue());
                 double amountToRegen = allStats.getVitalityStat().getValue() + maxHealth * allStats.getHealthRegenStat().getValue();
-                if (health + amountToRegen > maxHealth)
+                //System.out.println("a,mount to regen" + amountToRegen);
+                //System.out.println("helth " + health);
+                //System.out.println("player current hleath " + player.getHealth());
+                if (health + amountToRegen > maxHealth){
                     health = maxHealth;
+                    //System.out.println(true);
+                }
                 else
                     health += amountToRegen;
-                int proportion = (int) Math.ceil(getMaxHealth() / 20);
-                System.out.println(proportion);
-                System.out.println(health);
+                double proportion =  Math.ceil(maxHealth / 20);
+                //System.out.println("new health " + health);
+                //System.out.println("new health final" + Math.ceil(health / proportion));
                 player.setHealth(Math.ceil(health / proportion));
-
+                for (int i = 0; i < 3; i++) {
+                    //System.out.println(" ");
+                }
             }
         }.runTaskTimer(main, 50, 50);
     }

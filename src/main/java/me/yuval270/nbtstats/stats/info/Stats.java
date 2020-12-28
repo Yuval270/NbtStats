@@ -56,18 +56,18 @@ public class Stats {
     public static final double DEFAULT_CRIT_CHANCE = getValue("default_crit_change");
     public static final double DEFAULT_CRIT_DAMAGE = getValue("default_crit_damage");
     public static final double DEFAULT_CRIT_FACTOR = (getValue("default_crit_factor") + 100) / 100;
-
+// TODO incase someone changes slot or shit
     public static final double DEFAULT_LIFE_STEAL = (getValue("default_life_steal") + 100) / 100;
     public static final double DEFAULT_LIFE_STEAL_CHANCE = getValue("default_life_steal_chance");
 
     // All default values:
     public static final double DEFAULT_DEFENSE = getValue("default_defense");
-    public static final double DEFAULT_RESISTANCE = getValue("default_resistance") / 100;
+    public static final double DEFAULT_RESISTANCE = 1 - (getValue("default_resistance") / 100);
 
-    public static final double DEFAULT_HEALTH_REGEN = (getValue("default_health_regen") + 100) / 100;
+    public static final double DEFAULT_HEALTH_REGEN = getValue("default_health_regen") / 100;
     public static final double DEFAULT_VITALITY = getValue("default_vitality");
 
-    public static final double DEFAULT_BLOCK = (getValue("default_block") + 100) / 100;
+    public static final double DEFAULT_BLOCK = getValue("default_block");
     public static final double DEFAULT_DODGE = getValue("default_dodge");
     public static final int DODGE_COOLDOWN = config.getInt("dodge_cooldown") * 20;
 

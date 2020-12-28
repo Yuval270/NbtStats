@@ -63,7 +63,7 @@ public class WeaponStats {
     }
 
     public double getFinalDamage() {
-        return getRandomDamageInRange() + getCritDamage();
+        return getRandomDamageInRange() * percentDamageStat.getValue() + getCritDamage();
     }
 
     public double getLifeStealAmount(double finalDamage) {

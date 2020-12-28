@@ -27,7 +27,7 @@ public class StatsManager {
     }
     public void addPlayer(Player player){
         playerStats.put(player.getUniqueId(), new PlayerStats(player, main));
-        System.out.println(playerStats.containsKey(player.getUniqueId()));
+        //System.out.println(playerStats.containsKey(player.getUniqueId()));
         //  if (getPlayer(player) != null
          //  playerStats.add(new PlayerStats(player, main));
     }

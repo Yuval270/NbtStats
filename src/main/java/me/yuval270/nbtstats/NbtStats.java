@@ -21,7 +21,7 @@ public final class NbtStats extends JavaPlugin {
         saveDefaultConfig();
         statsManager = new StatsManager(this);
         loadEvents();
-        getCommand("nbt").setExecutor(new NbtCmd(this));
+       //getCommand("nbt").setExecutor(new NbtCmd(this));
     }
     private void loadEvents(){
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
