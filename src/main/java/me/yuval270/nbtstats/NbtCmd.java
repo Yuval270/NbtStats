@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @RequiredArgsConstructor
-public class NbtCmd implements CommandExecutor {
+public class NbtCmd implements CommandExecutor { // ** THIS IS A DEBUG COMMAND**
     private final NbtStats main;
 
     @Override
