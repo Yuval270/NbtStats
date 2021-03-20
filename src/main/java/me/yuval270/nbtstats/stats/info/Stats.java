@@ -43,9 +43,12 @@ public class Stats {
 
     public static final String NBT_CLASS = "Class";
     public static final String NBT_SPEED = "Level";
-
+        
+    
+    
+    //todo: changing it all into non static 
     // Armor default values:
-    public static final double DEFAULT_HEALTH = getValue("default_health"); // todo change it into non static
+ /*   public static final double DEFAULT_HEALTH = getValue("default_health");
     public static final double DEFAULT_CONSTITUTION = (getValue("default_constitution") + 100) / 100;
 
     // Weapon default values:
@@ -69,7 +72,7 @@ public class Stats {
 
     public static final double DEFAULT_BLOCK = getValue("default_block");
     public static final double DEFAULT_DODGE = getValue("default_dodge");
-    public static final int DODGE_COOLDOWN = config.getInt("dodge_cooldown") * 20;
+    public static final int DODGE_COOLDOWN = config.getInt("dodge_cooldown") * 20;*/
 
 
 
