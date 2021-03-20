@@ -45,7 +45,7 @@ public class Stats {
     public static final String NBT_SPEED = "Level";
 
     // Armor default values:
-    public static final double DEFAULT_HEALTH = getValue("default_health");
+    public static final double DEFAULT_HEALTH = getValue("default_health"); // todo change it into non static
     public static final double DEFAULT_CONSTITUTION = (getValue("default_constitution") + 100) / 100;
 
     // Weapon default values:
